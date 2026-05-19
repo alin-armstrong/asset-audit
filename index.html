@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Asset Audit | WealthOS</title>
+<meta name="description" content="A 10-question diagnostic that reveals whether you're operating like a worker, transitioning, or a treasurer.">
+<meta property="og:title" content="The Asset Audit | WealthOS">
+<meta property="og:description" content="Worker. Transitioning. Treasurer. Which one are you actually operating like?">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Asset Audit">
+<meta name="twitter:description" content="10 questions. One score. Find out which operating system you're running.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0f0a;
+    background-image: radial-gradient(circle at 20% 30%, rgba(180, 240, 50, 0.06) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(180, 240, 50, 0.04) 0%, transparent 50%);
+    color: #e8e8e8;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #b4f032;
+    background: rgba(180, 240, 50, 0.08);
+    border: 1px solid rgba(180, 240, 50, 0.25);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -1px;
+    color: #ffffff;
+    line-height: 1.15;
+  }
+
+  h1 .accent {
+    color: #b4f032;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: #999;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: #131a13;
+    border: 1px solid rgba(180, 240, 50, 0.12);
+    border-radius: 100px;
+    height: 8px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #b4f032 0%, #d4ff5a 100%);
+    width: 0%;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 12px rgba(180, 240, 50, 0.4);
+  }
+
+  .progress-text {
+    text-align: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .progress-text .accent {
+    color: #b4f032;
+  }
+
+  /* Question card */
+  .question-card {
+    background: #131a13;
+    border: 1px solid rgba(180, 240, 50, 0.12);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 1.5rem;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .question-number {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #b4f032;
+    margin-bottom: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .question-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+  }
+
+  .answer-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .answer-btn {
+    padding: 16px 20px;
+    background: transparent;
+    border: 1px solid rgba(180, 240, 50, 0.3);
+    border-radius: 12px;
+    color: #e8e8e8;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .answer-btn:hover {
+    background: rgba(180, 240, 50, 0.08);
+    border-color: rgba(180, 240, 50, 0.6);
+    color: #b4f032;
+    transform: translateY(-1px);
+  }
+
+  .answer-btn.yes:hover {
+    background: rgba(180, 240, 50, 0.12);
+    border-color: #b4f032;
+    box-shadow: 0 0 20px rgba(180, 240, 50, 0.15);
+  }
+
+  .answer-btn.no:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ccc;
+  }
+
+  /* Back button */
+  .back-btn {
+    background: transparent;
+    border: none;
+    color: #666;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 8px 16px;
+    margin: 0 auto;
+    display: block;
+    transition: color 0.2s ease;
+  }
+
+  .back-btn:hover {
+    color: #b4f032;
+  }
+
+  .back-btn:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Result screen */
+  .result-screen {
+    display: none;
+  }
+
+  .result-screen.active {
+    display: block;
+  }
+
+  .quiz-screen {
+    display: block;
+  }
+
+  .quiz-screen.hidden {
+    display: none;
+  }
+
+  .score-badge {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: rgba(180, 240, 50, 0.08);
+    border: 1px solid rgba(180, 240, 50, 0.25);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #b4f032;
+  }
+
+  .result-card {
+    background: #131a13;
+    border: 1px solid rgba(180, 240, 50, 0.2);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #b4f032, transparent);
+  }
+
+  .result-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .result-title {
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+    color: #b4f032;
+    line-height: 1;
+  }
+
+  .result-score {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .result-score .num {
+    color: #b4f032;
+    font-weight: 700;
+  }
+
+  .result-diagnosis {
+    font-size: 17px;
+    color: #e8e8e8;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+    font-weight: 500;
+  }
+
+  .result-detail {
+    font-size: 14px;
+    color: #999;
+    line-height: 1.65;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Score breakdown */
+  .breakdown {
+    background: #131a13;
+    border: 1px solid rgba(180, 240, 50, 0.12);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .breakdown-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .breakdown-tiers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  @media (min-width: 600px) {
+    .breakdown-tiers { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .tier {
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .tier.active {
+    opacity: 1;
+    background: rgba(180, 240, 50, 0.06);
+    border-color: rgba(180, 240, 50, 0.3);
+    box-shadow: 0 0 20px rgba(180, 240, 50, 0.08);
+  }
+
+  .tier-name {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+
+  .tier.active .tier-name {
+    color: #b4f032;
+  }
+
+  .tier-range {
+    font-size: 12px;
+    color: #666;
+  }
+
+  /* Action buttons */
+  .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .action-buttons { grid-template-columns: 1fr 1fr; }
+  }
+
+  .action-btn {
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(180, 240, 50, 0.3);
+    background: transparent;
+    color: #e8e8e8;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .action-btn:hover {
+    background: rgba(180, 240, 50, 0.08);
+    border-color: rgba(180, 240, 50, 0.6);
+    color: #b4f032;
+  }
+
+  .action-btn.primary {
+    background: rgba(180, 240, 50, 0.12);
+    border-color: rgba(180, 240, 50, 0.5);
+    color: #b4f032;
+  }
+
+  .action-btn.primary:hover {
+    background: rgba(180, 240, 50, 0.2);
+    border-color: #b4f032;
+    box-shadow: 0 0 20px rgba(180, 240, 50, 0.15);
+  }
+
+  /* Footer */
+  .disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: #555;
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 2rem auto 0;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 0.5px;
+  }
+
+  .footer .brand {
+    color: #b4f032;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="eyebrow">A WealthOS diagnostic</div>
+    <h1>The asset <span class="accent">audit</span></h1>
+    <p class="subtitle">10 questions. One score. Find out which operating system you're actually running.</p>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="quiz-screen" id="quiz-screen">
+
+    <div class="progress-text">
+      Question <span class="accent" id="current-q">1</span> of <span id="total-q">10</span>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-number" id="q-number">01</div>
+      <div class="question-text" id="q-text">Loading...</div>
+      <div class="answer-buttons">
+        <button class="answer-btn yes" onclick="answer(1)">Yes</button>
+        <button class="answer-btn no" onclick="answer(0)">No</button>
+      </div>
+    </div>
+
+    <button class="back-btn" id="back-btn" onclick="goBack()" disabled>← Back</button>
+
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="result-screen" id="result-screen">
+
+    <div style="text-align: center;">
+      <div class="score-badge">Your result</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-label">You're operating like a</div>
+      <div class="result-title" id="result-title">Worker</div>
+      <div class="result-score">Score: <span class="num" id="result-num">0</span> out of 10</div>
+      <div class="result-diagnosis" id="result-diagnosis">Your one-line diagnosis appears here.</div>
+      <div class="result-detail" id="result-detail">Detailed analysis appears here.</div>
+    </div>
+
+    <div class="breakdown">
+      <div class="breakdown-title">Where you fall on the scale</div>
+      <div class="breakdown-tiers">
+        <div class="tier" id="tier-worker">
+          <div class="tier-name">Worker</div>
+          <div class="tier-range">0 – 3 points</div>
+        </div>
+        <div class="tier" id="tier-transitioning">
+          <div class="tier-name">Transitioning</div>
+          <div class="tier-range">4 – 6 points</div>
+        </div>
+        <div class="tier" id="tier-treasurer">
+          <div class="tier-name">Treasurer</div>
+          <div class="tier-range">7 – 10 points</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-btn" onclick="restart()">Retake the audit</button>
+      <button class="action-btn primary" onclick="shareResult()">Share my result</button>
+    </div>
+
+  </div>
+
+  <p class="disclaimer">For educational purposes only. Not financial, investment, tax, or legal advice. The Asset Audit is a self-assessment tool designed to surface mindset patterns — not to evaluate your actual financial position.</p>
+
+  <div class="footer">
+    Built on the <span class="brand">WealthOS</span> framework
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const questions = [
+    "Do you own anything that generates income while you sleep?",
+    "Do you have an asset you can borrow against without selling it?",
+    "Do you know your current liquidity ratio (cash and accessible capital vs. total wealth)?",
+    "Have you taken tax depreciation on an asset you bought in the last 12 months?",
+    "If your income stopped tomorrow, could your assets fund your lifestyle for 12+ months?",
+    "Do you have written rules for how you deploy new capital (a treasury doctrine)?",
+    "Can you name the specific job each of your major assets is doing for you?",
+    "Have you ever used leverage to acquire an asset that out-earns the cost of the debt?",
+    "Do you measure your progress by your balance sheet, not your income?",
+    "Do you have a single point of failure that could take down your entire financial life? (Answer NO if you've eliminated this)"
+  ];
+
+  // Note: question 10 is inverted — "No" means you've eliminated the single point of failure, which is the treasurer answer
+  const invertedQuestions = [9]; // index 9 = question 10
+
+  let currentQuestion = 0;
+  let answers = [];
+
+  const quizScreen = document.getElementById('quiz-screen');
+  const resultScreen = document.getElementById('result-screen');
+  const qText = document.getElementById('q-text');
+  const qNumber = document.getElementById('q-number');
+  const currentQEl = document.getElementById('current-q');
+  const totalQEl = document.getElementById('total-q');
+  const progressBar = document.getElementById('progress-bar');
+  const backBtn = document.getElementById('back-btn');
+
+  totalQEl.textContent = questions.length;
+
+  function renderQuestion() {
+    qText.textContent = questions[currentQuestion];
+    qNumber.textContent = String(currentQuestion + 1).padStart(2, '0');
+    currentQEl.textContent = currentQuestion + 1;
+    progressBar.style.width = ((currentQuestion) / questions.length * 100) + '%';
+    backBtn.disabled = currentQuestion === 0;
+  }
+
+  window.answer = function(value) {
+    // For inverted questions, flip the score (No = 1 point, Yes = 0 points)
+    const score = invertedQuestions.includes(currentQuestion) ? (value === 1 ? 0 : 1) : value;
+    answers[currentQuestion] = score;
+    currentQuestion++;
+
+    if (currentQuestion >= questions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  };
+
+  window.goBack = function() {
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      renderQuestion();
+    }
+  };
+
+  window.restart = function() {
+    currentQuestion = 0;
+    answers = [];
+    resultScreen.classList.remove('active');
+    quizScreen.classList.remove('hidden');
+    renderQuestion();
+  };
+
+  window.shareResult = function() {
+    const totalScore = answers.reduce((a, b) => a + b, 0);
+    const tier = getTier(totalScore);
+    const shareText = 'I just took the WealthOS Asset Audit. I scored ' + totalScore + '/10 — operating like a ' + tier + '. What about you? ' + window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'My WealthOS Asset Audit Result',
+        text: shareText,
+        url: window.location.href
+      }).catch(() => copyToClipboard(shareText));
+    } else {
+      copyToClipboard(shareText);
+    }
+  };
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Result copied to clipboard! Paste it anywhere to share.');
+      }).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      alert('Result copied to clipboard! Paste it anywhere to share.');
+    } catch (e) {
+      alert('Share text:\n\n' + text);
+    }
+    document.body.removeChild(textarea);
+  }
+
+  function getTier(score) {
+    if (score <= 3) return 'Worker';
+    if (score <= 6) return 'Transitioning';
+    return 'Treasurer';
+  }
+
+  function showResult() {
+    const totalScore = answers.reduce((a, b) => a + b, 0);
+    const tier = getTier(totalScore);
+
+    document.getElementById('result-title').textContent = tier;
+    document.getElementById('result-num').textContent = totalScore;
+
+    // Highlight the active tier
+    document.getElementById('tier-worker').classList.toggle('active', tier === 'Worker');
+    document.getElementById('tier-transitioning').classList.toggle('active', tier === 'Transitioning');
+    document.getElementById('tier-treasurer').classList.toggle('active', tier === 'Treasurer');
+
+    const diagnosis = document.getElementById('result-diagnosis');
+    const detail = document.getElementById('result-detail');
+
+    if (tier === 'Worker') {
+      diagnosis.textContent = "Your wealth depends on your effort. The moment the effort stops, the wealth stops.";
+      detail.textContent = "You're running the operating system most people run — earn, save, hope. Right now, almost none of your money is working in parallel with you, and the few assets you have are doing only one job each. This isn't a moral problem; it's a system problem. The good news is the shift is mechanical, not magical. The first move is installing rules around your capital so it stops sitting idle.";
+    } else if (tier === 'Transitioning') {
+      diagnosis.textContent = "You've started the shift. You can see the game. Now it's time to install the system.";
+      detail.textContent = "You've got pieces in place — maybe some productive assets, some awareness of leverage and tax strategy, some sense that income alone isn't the answer. But the system isn't running on its own yet. The next phase is connecting the pieces: written rules, deliberate liquidity layers, tax depreciation flowing back into more assets, every dollar doing multiple jobs. The framework exists. You just haven't fully installed it.";
+    } else {
+      diagnosis.textContent = "You're operating like a treasurer. Your wealth compounds whether you show up or not.";
+      detail.textContent = "Your assets do the work. You've moved past the income-as-scorecard mindset and built a balance sheet that runs in parallel with your effort. The remaining edge is velocity — getting every dollar to do more jobs, stacking compounding lines, and engineering returns through structure rather than chasing them through speculation. You don't need motivation. You need optimization.";
+    }
+
+    quizScreen.classList.add('hidden');
+    resultScreen.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Initialize
+  renderQuestion();
+})();
+</script>
+
+</body>
+</html>
